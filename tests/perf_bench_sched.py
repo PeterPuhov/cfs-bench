@@ -4,30 +4,20 @@ import src.test_registry as test_registry
 import re
 
 
-class PerfBench(TestCase):
-    def __init__(self, command: str):
-        super().__init__(command)
-
-    def install(self, target: Target):
-        dependencies = ['apt install -y linux-tools-common',
-                        'apt install -y linux-tools-`uname -r`']
-        super().install(target, dependencies)
-
-
 @test_registry.register_test
-class PerfBenchSchedPipe(PerfBench):
+class PerfBenchSchedPipe(TestCase):
     def __init__(self, target: Target):
         super().__init__('perf bench -f simple sched pipe')
 
 
 @test_registry.register_test
-class PerfBenchSchedMessaging(PerfBench):
+class PerfBenchSchedMessaging(TestCase):
     def __init__(self, target: Target):
         super().__init__('perf bench -f simple sched messaging -l 10000')
 
 
 @test_registry.register_test
-class PerfBenchMemMemset(PerfBench):
+class PerfBenchMemMemset(TestCase):
     def __init__(self, target: Target):
         super().__init__('perf bench -f simple  mem memset -s 4GB -l 5 -f default')
 
@@ -43,7 +33,7 @@ class PerfBenchMemMemset(PerfBench):
 
 
 @test_registry.register_test
-class PerfBenchFutexWake(PerfBench):
+class PerfBenchFutexWake(TestCase):
     def __init__(self, target: Target):
         super().__init__('perf bench -f simple futex wake -s -t 1024 -w 1')
 

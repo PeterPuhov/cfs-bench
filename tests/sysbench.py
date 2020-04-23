@@ -4,17 +4,8 @@ import src.test_registry as test_registry
 import re
 
 
-class SysBench(TestCase):
-    def __init__(self, command: str):
-        super().__init__(command)
-
-    def install(self, target: Target):
-        dependencies = ['apt-get install -y sysbench']
-        super().install(target, dependencies)
-
-
 @test_registry.register_test
-class SysBenchCpu(SysBench):
+class SysBenchCpu(TestCase):
     def __init__(self, target: Target):
         threads = int(target.platform['number_of_cpus'] / 2)
         command = 'sysbench cpu --time=10 --threads={} --cpu-max-prime=10000 run'.format(threads)
@@ -30,7 +21,7 @@ class SysBenchCpu(SysBench):
         super.parse_result(result)
 
 @test_registry.register_test
-class SysBenchMemory(SysBench):
+class SysBenchMemory(TestCase):
     def __init__(self, target: Target):
         threads = int(target.platform['number_of_cpus'] / 2)
         command = 'sysbench memory --memory-access-mode=rnd --threads={} run'.format(threads)
@@ -46,7 +37,7 @@ class SysBenchMemory(SysBench):
         super.parse_result(result)
 
 @test_registry.register_test
-class SysBenchThreads(SysBench):
+class SysBenchThreads(TestCase):
     def __init__(self, target: Target):
         threads = int(target.platform['number_of_cpus'] / 2)
         command = 'sysbench threads --threads={} run'.format(threads)
@@ -62,7 +53,7 @@ class SysBenchThreads(SysBench):
         super.parse_result(result)
 
 @test_registry.register_test
-class SysBenchMutex(SysBench):
+class SysBenchMutex(TestCase):
     def __init__(self, target: Target):
         threads = int(target.platform['number_of_cpus'] * 4)
         command = 'sysbench mutex --mutex-num=1 --threads={} run'.format(threads)

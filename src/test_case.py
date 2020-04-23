@@ -17,7 +17,3 @@ class TestCase(object):
 
     def parse_result(self, result: str):
         return result
-
-    def install(self, target: Target, dependencies: str):
-        for d in dependencies:
-            target.execute('DEBIAN_FRONTEND=noninteractive {}'.format(d), as_root=True)
