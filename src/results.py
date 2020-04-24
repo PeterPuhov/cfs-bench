@@ -17,11 +17,17 @@ class Results(object):
         print(entry)
         self.log_data.append(entry)
 
-    def store(self, name='Test'):
-        fname = "{}-{}.json".format(name, datetime.now().strftime("%H:%M:%S"))
+    def store(self, name=None):
+        if name is not None:
+            fname = "{}.json".format(name)
+        else:
+            fname = "Test-{}.json".format(datetime.now().strftime("%H:%M:%S"))
+
+        self.test_results['name'] = fname.replace('.json','')
         with open(fname, 'w') as outfile:
-            json.dump(self.test_results, outfile)
+            json.dump(self.test_results, outfile, indent=2)
         print("Results stored in {}".format(fname))
+        return fname
 
     def add_test_result(self, test, test_result: dict):
         self.test_results['tests'][test] = test_result
