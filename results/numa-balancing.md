@@ -24,8 +24,8 @@ NUMA balancing impact on common benchmarks
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON|10.139 (usecs/op)|
-|numa_balancing-OFF|10.360 (usecs/op)|
+|numa_balancing-ON|10.442 (usecs/op)|
+|numa_balancing-OFF|10.099 (usecs/op)|
   
 
 
@@ -33,8 +33,8 @@ NUMA balancing impact on common benchmarks
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON|5.391 (Sec)|
-|numa_balancing-OFF|5.593 (Sec)|
+|numa_balancing-ON|6.766 (Sec)|
+|numa_balancing-OFF|6.058 (Sec)|
   
 
 
@@ -42,8 +42,8 @@ NUMA balancing impact on common benchmarks
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON|16.926746120812957 (GB/sec)|
-|numa_balancing-OFF|17.681621192483895 (GB/sec)|
+|numa_balancing-ON|16.87722410168865 (GB/sec)|
+|numa_balancing-OFF|17.135948907454736 (GB/sec)|
   
 
 
@@ -51,8 +51,8 @@ NUMA balancing impact on common benchmarks
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON| 8.3887  (ms)|
-|numa_balancing-OFF| 9.2038  (ms)|
+|numa_balancing-ON| 10.3396  (ms)|
+|numa_balancing-OFF| 8.1553  (ms)|
   
 
 
@@ -60,8 +60,8 @@ NUMA balancing impact on common benchmarks
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON|214313.30 (Events/sec)|
-|numa_balancing-OFF|214451.04 (Events/sec)|
+|numa_balancing-ON|214005.88 (Events/sec)|
+|numa_balancing-OFF|215078.81 (Events/sec)|
   
 
 
@@ -69,8 +69,8 @@ NUMA balancing impact on common benchmarks
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON|2243 (MB/s)|
-|numa_balancing-OFF|2868 (MB/s)|
+|numa_balancing-ON|2437 (MB/s)|
+|numa_balancing-OFF|2611 (MB/s)|
   
 
 
@@ -78,8 +78,8 @@ NUMA balancing impact on common benchmarks
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON|3048 (Events/sec)|
-|numa_balancing-OFF|2050 (Events/sec)|
+|numa_balancing-ON|4588 (Events/sec)|
+|numa_balancing-OFF|3958 (Events/sec)|
   
 
 
@@ -87,6 +87,6 @@ NUMA balancing impact on common benchmarks
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON|33.3802 (Sec)|
-|numa_balancing-OFF|34.5980 (Sec)|
+|numa_balancing-ON|32.8115 (Sec)|
+|numa_balancing-OFF|32.1530 (Sec)|
   
