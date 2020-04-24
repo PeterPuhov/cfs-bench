@@ -1,3 +1,4 @@
+import time
 from src.results import Results
 from src.target import Target
 from src.report import *
@@ -22,9 +23,11 @@ def main():
     tests_to_run = []
 
     target.execute('sysctl kernel.numa_balancing=1', as_root=True)
+    time.sleep(5)
     res_files.append(run_tests(test_name='numa_balancing-ON', target=target, tests_to_run=tests_to_run))
 
     target.execute('sysctl kernel.numa_balancing=0', as_root=True)
+    time.sleep(5)
     res_files.append(run_tests(test_name='numa_balancing-OFF', target=target, tests_to_run=tests_to_run))
 
     title = "NUMA balancing impact on common benchmarks"
