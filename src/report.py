@@ -26,7 +26,10 @@ def create_report(res_files: [], output: str, title="", description=""):
     mdFile.new_header(level=1, title='Test results')
     tests = res[0]['tests']
     for test_key in tests.keys():
-        mdFile.new_paragraph("{}: {}".format(test_key, tests[test_key]['command']), bold_italics_code='bc', color='blue')
+        mdFile.new_header(level=2, title=test_key)
+        mdFile.new_line('~~~')
+        mdFile.new_line(tests[test_key]['command'])
+        mdFile.new_line('~~~')
         list_of_strings = ["Test", "Result"]
         rows = 1
         for r in res:
