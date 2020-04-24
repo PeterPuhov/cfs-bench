@@ -10,12 +10,12 @@ NUMA balancing impact on common benchmarks
 
 |System|Information|
 | :--- | :--- |
-|Architecture|x86_64|
-|Processor version|AMD FX(tm)-8320 Eight-Core Processor           |
-|CPUs|8|
-|NUMA nodes|1|
-|Kernel release|5.3.0-46-generic|
-|Node name|Trinity|
+|Architecture|aarch64|
+|Processor version|Kunpeng 920-6426|
+|CPUs|128|
+|NUMA nodes|4|
+|Kernel release|5.6.0+|
+|Node name|ARMv2-3|
 
 # Test results
 
@@ -24,8 +24,8 @@ NUMA balancing impact on common benchmarks
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON|17.122 (usecs/op)|
-|numa_balancing-OFF|17.133 (usecs/op)|
+|numa_balancing-ON|10.139 (usecs/op)|
+|numa_balancing-OFF|10.360 (usecs/op)|
   
 
 
@@ -33,8 +33,8 @@ NUMA balancing impact on common benchmarks
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON|18.267 (Sec)|
-|numa_balancing-OFF|22.384 (Sec)|
+|numa_balancing-ON|5.391 (Sec)|
+|numa_balancing-OFF|5.593 (Sec)|
   
 
 
@@ -42,8 +42,8 @@ NUMA balancing impact on common benchmarks
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON|5.632257515825235 (GB/sec)|
-|numa_balancing-OFF|5.740363365001005 (GB/sec)|
+|numa_balancing-ON|16.926746120812957 (GB/sec)|
+|numa_balancing-OFF|17.681621192483895 (GB/sec)|
   
 
 
@@ -51,42 +51,42 @@ NUMA balancing impact on common benchmarks
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON| 12.6763  (ms)|
-|numa_balancing-OFF| 11.8599  (ms)|
+|numa_balancing-ON| 8.3887  (ms)|
+|numa_balancing-OFF| 9.2038  (ms)|
   
 
 
-**<font color="blue">``SysBenchCpu: sysbench cpu --time=10 --threads=4 --cpu-max-prime=10000 run``</font>**  
+**<font color="blue">``SysBenchCpu: sysbench cpu --time=10 --threads=64 --cpu-max-prime=10000 run``</font>**  
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON|5940.43 (Events/sec)|
-|numa_balancing-OFF|5936.09 (Events/sec)|
+|numa_balancing-ON|214313.30 (Events/sec)|
+|numa_balancing-OFF|214451.04 (Events/sec)|
   
 
 
-**<font color="blue">``SysBenchMemory: sysbench memory --memory-access-mode=rnd --threads=4 run``</font>**  
+**<font color="blue">``SysBenchMemory: sysbench memory --memory-access-mode=rnd --threads=64 run``</font>**  
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON|507 (MB/s)|
-|numa_balancing-OFF|498 (MB/s)|
+|numa_balancing-ON|2243 (MB/s)|
+|numa_balancing-OFF|2868 (MB/s)|
   
 
 
-**<font color="blue">``SysBenchThreads: sysbench threads --threads=4 run``</font>**  
+**<font color="blue">``SysBenchThreads: sysbench threads --threads=64 run``</font>**  
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON|7211 (Events/sec)|
-|numa_balancing-OFF|6922 (Events/sec)|
+|numa_balancing-ON|3048 (Events/sec)|
+|numa_balancing-OFF|2050 (Events/sec)|
   
 
 
-**<font color="blue">``SysBenchMutex: sysbench mutex --mutex-num=1 --threads=32 run``</font>**  
+**<font color="blue">``SysBenchMutex: sysbench mutex --mutex-num=1 --threads=512 run``</font>**  
 
 |Test|Result|
 | :--- | :--- |
-|numa_balancing-ON|1.2819 (Sec)|
-|numa_balancing-OFF|1.3692 (Sec)|
+|numa_balancing-ON|33.3802 (Sec)|
+|numa_balancing-OFF|34.5980 (Sec)|
   
