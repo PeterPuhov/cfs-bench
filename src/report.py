@@ -2,13 +2,16 @@ import json
 from mdutils import MdUtils
 
 
-def create_report(res_files: [], output: str, title=""):
+def create_report(res_files: [], output: str, title="", description=""):
     res = []
     for f in res_files:
         with open(f) as json_file:
             res.append(json.load(json_file))
 
     mdFile = MdUtils(file_name=output, title=title)
+    if description:
+        mdFile.new_paragraph(description, bold_italics_code='b')
+
     mdFile.new_header(level=1, title='Platform')
 
     platform = res[0]['platform']
