@@ -30,13 +30,16 @@ def create_report(res_files: [], output: str, title="", description=""):
         mdFile.new_line('~~~')
         mdFile.new_line(tests[test_key]['command'])
         mdFile.new_line('~~~')
-        list_of_strings = ["Test", "Result"]
+
+        test_res = tests[test_key]['result']
+        list_of_strings = ['Test'] + list(test_res.keys())
+        cols = len(list_of_strings)
         rows = 1
         for r in res:
-            list_of_strings.extend([r['name'], r['tests'][test_key]['result'] + " ({})".format(tests[test_key]['unit'])])
+            list_of_strings.extend( [r['name']] + list(r['tests'][test_key]['result'].values()) )
             rows += 1
-        mdFile.new_line()
-        mdFile.new_table(columns=2, rows=rows, text=list_of_strings, text_align='left')
+
+        mdFile.new_table(columns=cols, rows=rows, text=list_of_strings, text_align='left')
         mdFile.new_line()
 
     mdFile.create_md_file()

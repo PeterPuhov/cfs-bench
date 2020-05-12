@@ -33,8 +33,8 @@ class Target(object):
                 num_nodes += 1
         return num_nodes
 
-    def execute(self, command, check=False, as_root=False):
+    def execute(self, command, check=False, as_root=True):
         if as_root:
             command = 'sudo ' + command
-        p = subprocess.run(command, shell=True, check=check, stdout=subprocess.PIPE, universal_newlines=True)
+        p = subprocess.run(command, shell=True, check=check, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)        
         return p.stdout

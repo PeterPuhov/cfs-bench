@@ -10,17 +10,15 @@ class SysBenchCpu(TestCase):
         command = 'sysbench cpu --time=10 --threads={} --cpu-max-prime=10000 run'.format(threads)
         super().__init__(command)
 
-    def unit(self):
-        return "Events/sec"
-
     def parse_result(self, result: str):
         token = "events per second:"
+        res = result
         for line in result.splitlines():
             if token in line:
-                res = line.split(token)
-                return res[1].replace(' ', '')
-
-        super.parse_result(result)
+                res = line.split(token)[1].replace(' ', '')
+                break
+        
+        return {'Events/sec': res}
 
 
 @test_registry.register_test
@@ -30,17 +28,16 @@ class SysBenchMemory(TestCase):
         command = 'sysbench memory --memory-access-mode=rnd --threads={} run'.format(threads)
         super().__init__(command)
 
-    def unit(self):
-        return "MB/s"
-
     def parse_result(self, result: str):
         token = "total number of events:"
+        res = result
         for line in result.splitlines():
             if token in line:
-                res = line.split(token)
-                return str(int(int(res[1].replace(' ', '')) / (10 * 1024)))
-
-        super.parse_result(result)
+                res = line.split(token)[1].replace(' ', '')
+                res = "{:.3f}".format(int(res) / (10 * 1024))
+                break
+                
+        return {'Memory BW (MB/s)': res}
 
 
 @test_registry.register_test
@@ -50,17 +47,16 @@ class SysBenchThreads(TestCase):
         command = 'sysbench threads --threads={} run'.format(threads)
         super().__init__(command)
 
-    def unit(self):
-        return "Events/sec"
-
     def parse_result(self, result: str):
         token = "total number of events:"
+        res = result
         for line in result.splitlines():
             if token in line:
-                res = line.split(token)
-                return str(int(int(res[1].replace(' ', '')) / 10))
+                res = int(line.split(token)[1].replace(' ', '')) / 10
+                res = "{:.3f}".format(res)
+                break
 
-        super.parse_result(result)
+        return {'Events/sec': res}
 
 
 @test_registry.register_test
@@ -70,14 +66,12 @@ class SysBenchMutex(TestCase):
         command = 'sysbench mutex --mutex-num=1 --threads={} run'.format(threads)
         super().__init__(command)
 
-    def unit(self):
-        return "Sec"
-
     def parse_result(self, result: str):
         token = "total time:"
+        res = result
         for line in result.splitlines():
             if token in line:
-                res = line.split(token)
-                return res[1].replace(' ', '').replace('s', '')
+                res = line.split(token)[1].replace(' ', '').replace('s', '')
+                break
 
-        super.parse_result(result)
+        return {'Time (sec)': res}

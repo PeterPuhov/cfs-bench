@@ -9,48 +9,39 @@ class PerfBenchSchedPipe(TestCase):
     def __init__(self, target: Target):
         super().__init__('perf bench -f simple sched pipe')
 
-    def unit(self):
-        return "usecs/op"
-
     def parse_result(self, result: str):
-        return result.rstrip('\n')
+        res = result.splitlines()[0]
+        return {'Time (sec)': res}
 
 @test_registry.register_test
 class PerfBenchSchedMessaging(TestCase):
     def __init__(self, target: Target):
         super().__init__('perf bench -f simple sched messaging -l 10000')
 
-    def unit(self):
-        return "Sec"
-
     def parse_result(self, result: str):
-        return result.rstrip('\n')
+        res = result.splitlines()[0]
+        return {'Time (sec)': res}
 
 @test_registry.register_test
 class PerfBenchMemMemset(TestCase):
     def __init__(self, target: Target):
-        super().__init__('perf bench -f simple  mem memset -s 4GB -l 5 -f default')
-
-    def unit(self):
-        return "GB/sec"
+        super().__init__('perf bench -f simple  mem memset -s 1GB -l 5 -f default')
 
     def parse_result(self, result: str):
         delimiters = "\n"
         regexPattern = '|'.join(map(re.escape, delimiters))
-        res = re.split(regexPattern, result)
-        return str(float(res[1]) / (1 << 30))
-
+        r = re.split(regexPattern, result)[1]
+        res = "{:.3f}".format(float(r) / (1 << 30))
+        return {'Memory BW (GB/s)': res}
 
 @test_registry.register_test
 class PerfBenchFutexWake(TestCase):
     def __init__(self, target: Target):
         super().__init__('perf bench -f simple futex wake -s -t 1024 -w 1')
 
-    def unit(self):
-        return "ms"
-
     def parse_result(self, result: str):
         delimiters = "threads in", "ms"
         regexPattern = '|'.join(map(re.escape, delimiters))
-        res = re.split(regexPattern, result)
-        return res[1]
+        t = re.split(regexPattern, result)[1]
+
+        return {'Time (ms)': t }

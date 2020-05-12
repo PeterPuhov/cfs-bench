@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #target.execute('DEBIAN_FRONTEND=noninteractive {}'.format(d), as_root=True)
+# tools/perf$ sudo make prefix=/usr install
 
 sudo apt install -y linux-tools-common
 sudo apt install -y linux-tools-`uname -r`
