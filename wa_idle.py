@@ -4,6 +4,7 @@ from src.target import Target
 from src.report import *
 import tests.perf_bench_sched
 import tests.sysbench
+import tests.hackbench
 import src.test_registry as test_registry
 
 

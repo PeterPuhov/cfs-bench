@@ -7,7 +7,7 @@ import re
 @test_registry.register_test
 class PerfBenchSchedPipe(TestCase):
     def __init__(self, target: Target):
-        super().__init__('perf bench -f simple sched pipe')
+        super().__init__('perf bench -f simple sched pipe -l 4000000')
 
     def parse_result(self, result: str):
         res = result.splitlines()[0]
@@ -16,7 +16,7 @@ class PerfBenchSchedPipe(TestCase):
 @test_registry.register_test
 class PerfBenchSchedMessaging(TestCase):
     def __init__(self, target: Target):
-        super().__init__('perf bench -f simple sched messaging -l 10000')
+        super().__init__('perf bench -f simple sched messaging -l 100000')
 
     def parse_result(self, result: str):
         res = result.splitlines()[0]
@@ -25,7 +25,7 @@ class PerfBenchSchedMessaging(TestCase):
 @test_registry.register_test
 class PerfBenchMemMemset(TestCase):
     def __init__(self, target: Target):
-        super().__init__('perf bench -f simple  mem memset -s 1GB -l 5 -f default')
+        super().__init__('perf bench -f simple  mem memset -s 32GB -l 15 -f default')
 
     def parse_result(self, result: str):
         delimiters = "\n"
@@ -37,7 +37,7 @@ class PerfBenchMemMemset(TestCase):
 @test_registry.register_test
 class PerfBenchFutexWake(TestCase):
     def __init__(self, target: Target):
-        super().__init__('perf bench -f simple futex wake -s -t 1024 -w 1')
+        super().__init__('perf bench -f simple futex wake -s -t 10240 -w 1')
 
     def parse_result(self, result: str):
         delimiters = "threads in", "ms"

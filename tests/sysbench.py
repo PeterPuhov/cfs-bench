@@ -7,7 +7,7 @@ import src.test_registry as test_registry
 class SysBenchCpu(TestCase):
     def __init__(self, target: Target):
         threads = int(target.n_cpus() / 2)
-        command = 'sysbench cpu --time=10 --threads={} --cpu-max-prime=10000 run'.format(threads)
+        command = 'sysbench cpu --time=60 --threads={} --cpu-max-prime=10000 run'.format(threads)
         super().__init__(command)
 
     def parse_result(self, result: str):
@@ -25,7 +25,7 @@ class SysBenchCpu(TestCase):
 class SysBenchMemory(TestCase):
     def __init__(self, target: Target):
         threads = int(target.n_cpus() / 2)
-        command = 'sysbench memory --memory-access-mode=rnd --threads={} run'.format(threads)
+        command = 'sysbench memory --time=60 --memory-access-mode=rnd --threads={} run'.format(threads)
         super().__init__(command)
 
     def parse_result(self, result: str):
@@ -44,7 +44,7 @@ class SysBenchMemory(TestCase):
 class SysBenchThreads(TestCase):
     def __init__(self, target: Target):
         threads = int(target.n_cpus() / 2)
-        command = 'sysbench threads --threads={} run'.format(threads)
+        command = 'sysbench threads --time=60 --threads={} run'.format(threads)
         super().__init__(command)
 
     def parse_result(self, result: str):
