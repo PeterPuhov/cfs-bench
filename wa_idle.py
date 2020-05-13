@@ -26,22 +26,26 @@ def main():
     res_files = []
 
     tests_to_run = []
+    iter = 3
 
     target.execute('sysctl kernel.numa_balancing=1', as_root=True)
     target.execute("bash -c 'echo WA_WEIGHT > /sys/kernel/debug/sched_features'", as_root=True)
     target.execute("bash -c 'echo WA_IDLE > /sys/kernel/debug/sched_features'", as_root=True)
     time.sleep(1)
-    res_files.append(run_tests(test_name='Default', target=target, tests_to_run=tests_to_run))
+    for i in range(iter):
+        res_files.append(run_tests(test_name='Default-{}'.format(i), target=target, tests_to_run=tests_to_run))
 
     target.execute('sysctl kernel.numa_balancing=0', as_root=True)
     time.sleep(1)
-    res_files.append(run_tests(test_name='NB-OFF', target=target, tests_to_run=tests_to_run))
+    for i in range(iter):
+        res_files.append(run_tests(test_name='NB-OFF-{}'.format(i), target=target, tests_to_run=tests_to_run))
 
     target.execute('sysctl kernel.numa_balancing=0', as_root=True)
     target.execute("bash -c 'echo NO_WA_WEIGHT > /sys/kernel/debug/sched_features'", as_root=True)
     target.execute("bash -c 'echo NO_WA_IDLE > /sys/kernel/debug/sched_features'", as_root=True)
     time.sleep(1)
-    res_files.append(run_tests(test_name='NB-OFF_NO_WA_IDLE', target=target, tests_to_run=tests_to_run))
+    for i in range(iter):
+        res_files.append(run_tests(test_name='NB-OFF_NO_WA_IDLE-{}'.format(i), target=target, tests_to_run=tests_to_run))
 
     title = "NUMA balancing impact on common benchmarks"
     description = "NUMA balancing can lead to performance degradation on \
