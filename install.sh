@@ -8,3 +8,6 @@ sudo apt install -y linux-tools-`uname -r`
 sudo apt-get install -y sysbench
 sudo apt install -y python3-pip
 sudo pip3 install mdutils
+
+sudo apt-get install -y rt-tests
+
