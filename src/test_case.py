@@ -16,13 +16,20 @@ class TestCase(object):
         results.add_test_result(self.__class__.__name__, test_result)
         results.log('Done.')
 
-    def run_event(self, target: Target, event: str, results: Results):
+    def run_event(self, target: Target, events: [], results: Results):
         results.log('Running [ {} ] ...'.format(self.command))
         test_result = {}        
-        test_result['command'] = 'perf stat -e ' + event + ' -- ' + self.command
-        res = target.execute(test_result['command'])
+        test_result['command'] = self.command        
+        cmd = 'perf stat'
+        for e in events:
+            cmd += " -e {} ".format(e)
+
+        cmd += " {}".format(self.command)
+        res = target.execute(cmd)
         test_result['result'] = self.parse_result(res)
-        test_result['result'].update(self.parse_event(event, res))
+        for e in events:
+            test_result['result'].update(self.parse_event(e, res))
+
         results.add_test_result(self.__class__.__name__, test_result)
         results.log('Done.')
 

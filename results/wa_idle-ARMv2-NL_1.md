@@ -3,8 +3,9 @@ NUMA balancing impact on common benchmarks
 ==========================================
 
 
-**NUMA balancing can lead to performance degradation on                    NUMA-based arm64 systems when tasks migrate,  
-                    and their memory accesses now suffer additional latency.                    NO_WA_IDLE prevents idle CPUs aggressively pull tasks. **
+**NUMA balancing can lead to performance degradation on NUMA-based arm64 systems when tasks migrate,and their memory accesses now suffer additional latency.  
+NO_WA_IDLE prevents idle CPUs aggressively pull tasks. **
+
 # Platform
   
 
@@ -35,7 +36,12 @@ perf stat -e sched:sched_migrate_task -- perf bench -f simple sched pipe -l 4000
 |NB-OFF_NO_WA_IDLE-0|63.215|0|
 |NB-OFF_NO_WA_IDLE-1|64.077|0|
 |NB-OFF_NO_WA_IDLE-2|44.903|0|
-  
+
+
+<div style="page-break-after: always; visibility: hidden"> 
+\pagebreak 
+</div>
+
 
 ## PerfBenchSchedMessaging
   
@@ -73,6 +79,11 @@ perf stat -e sched:sched_migrate_task -- perf bench -f simple  mem memset -s 32G
 |NB-OFF_NO_WA_IDLE-2|17.326|0|
   
 
+<div style="page-break-after: always; visibility: hidden"> 
+\pagebreak 
+</div>
+
+
 ## PerfBenchFutexWake
   
 ~~~  
@@ -108,6 +119,10 @@ perf stat -e sched:sched_migrate_task -- sysbench cpu --time=60 --threads=64 --c
 |NB-OFF_NO_WA_IDLE-1|212692.05|0|
 |NB-OFF_NO_WA_IDLE-2|212341.53|0|
   
+
+<div style="page-break-after: always; visibility: hidden"> 
+\pagebreak 
+</div>
 
 ## SysBenchMemory
   
@@ -145,6 +160,10 @@ perf stat -e sched:sched_migrate_task -- sysbench threads --time=60 --threads=64
 |NB-OFF_NO_WA_IDLE-2|14859.700|0|
   
 
+<div style="page-break-after: always; visibility: hidden"> 
+\pagebreak 
+</div>
+
 ## SysBenchMutex
   
 ~~~  
@@ -180,6 +199,10 @@ perf stat -e sched:sched_migrate_task -- hackbench --loops 20000
 |NB-OFF_NO_WA_IDLE-1|6.933|7|
 |NB-OFF_NO_WA_IDLE-2|8.006|5|
   
+
+<div style="page-break-after: always; visibility: hidden"> 
+\pagebreak 
+</div>
 
 ## HackbenchPipeThreads
   

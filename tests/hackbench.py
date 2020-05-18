@@ -5,7 +5,7 @@ import src.test_registry as test_registry
 
 @test_registry.register_test
 class HackbenchForkSockets(TestCase):
-    def __init__(self, target: Target):
+    def __init__(self, target: Target, **kwargs):
         threads = int(target.n_cpus() / 2)
         command = 'hackbench --loops 20000'
         super().__init__(command)
@@ -22,7 +22,7 @@ class HackbenchForkSockets(TestCase):
 
 @test_registry.register_test
 class HackbenchPipeThreads(TestCase):
-    def __init__(self, target: Target):
+    def __init__(self, target: Target, **kwargs):
         threads = int(target.n_cpus() / 2)
         command = 'hackbench --pipe --threads --loops 20000'
         super().__init__(command)
@@ -39,7 +39,7 @@ class HackbenchPipeThreads(TestCase):
 
 @test_registry.register_test
 class HackbenchPipeThreads4k(TestCase):
-    def __init__(self, target: Target):
+    def __init__(self, target: Target, **kwargs):
         threads = int(target.n_cpus() / 2)
         command = 'hackbench --pipe --threads --loops 20000 --datasize 4096'
         super().__init__(command)

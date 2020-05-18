@@ -7,6 +7,7 @@ import tests.hackbench
 import src.test_registry as test_registry
 
 
+
 def main():
     target = Target()
     test_results = Results(target)
@@ -15,10 +16,14 @@ def main():
 
     tests_to_run = []
     # tests_to_run = ['SysBenchCpu', 'SysBenchMemory']
-    tests_to_run = ['HackbenchForkSockets', 'HackbenchPipeThreads', 'HackbenchPipeThreads4k']
+    # tests_to_run = ['PerfBenchFutexWake']
+    time = 60
+    events = ['sched:sched_migrate_task', 'sched:sched_stick_numa', 'sched:sched_move_numa', 'sched:sched_swap_numa']
+    events.extend(['migrate:mm_migrate_pages'])
     for test in test_registry.test_registry:
         if not tests_to_run or test(target).__class__.__name__ in tests_to_run:
-            test(target).run_event(target, 'sched:sched_migrate_task', test_results)
+            t =  test(target, time=time)            
+            t.run_event(target, events, test_results)
 
     res_files = []
     res_files.append(test_results.store('Res1'))
