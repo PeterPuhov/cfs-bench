@@ -28,7 +28,7 @@ class PerfBenchSchedMessaging(TestCase):
 @test_registry.register_test
 class PerfBenchMemMemset(TestCase):
     def __init__(self, target: Target, **kwargs):
-        mem = max(1, int(target.platform['Memory (GB)'] / target.platform['CPUs']))
+        mem = max(1, int(target.platform['Memory (GB)'] / 4))
         test_cmd = 'perf bench -f simple  mem memset -s {}GB -l 15 -f default'.format(mem)
         super().__init__(test_cmd)
 
