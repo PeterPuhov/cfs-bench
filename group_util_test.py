@@ -14,8 +14,8 @@ def run_tests(test_name, target, tests_to_run):
     time = 60
     event = []
     for test in test_registry.test_registry:
-        if not tests_to_run or test(target).__class__.__name__ in tests_to_run:            
-            t =  test(target, time=time)            
+        if not tests_to_run or test(target).__class__.__name__ in tests_to_run:
+            t =  test(target, time=time)
             t.run(target, test_results)
 
     return test_results.store(test_name)
@@ -33,7 +33,7 @@ def main():
         time.sleep(5)
         res_files.append(run_tests(test_name='Default-{}'.format(i), target=target, tests_to_run=tests_to_run))
 
-    target.execute('sysctl kernel.sched_check_group_util=0', as_root=True)
+    target.execute('sysctl kernel.sched_check_group_util=1', as_root=True)
     for i in range(iter):
         time.sleep(5)
         res_files.append(run_tests(test_name='G-Util-{}'.format(i), target=target, tests_to_run=tests_to_run))
