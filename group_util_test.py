@@ -16,7 +16,7 @@ def run_tests(test_name, target, tests_to_run):
     for test in test_registry.test_registry:
         if not tests_to_run or test(target).__class__.__name__ in tests_to_run:            
             t =  test(target, time=time)            
-            t.run(target, events, test_results)
+            t.run(target, test_results)
 
     return test_results.store(test_name)
 
