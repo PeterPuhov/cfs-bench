@@ -16,7 +16,7 @@ def run_tests(test_name, target, tests_to_run):
     for test in test_registry.test_registry:
         if not tests_to_run or test(target).__class__.__name__ in tests_to_run:            
             t =  test(target, time=time)            
-            t.run_event(target, events, test_results)
+            t.run(target, events, test_results)
 
     return test_results.store(test_name)
 
@@ -44,7 +44,7 @@ def main():
                    and the same number of idle CPU's. \
                    We suggest evaluating group_util to find idlest group. "
 
-    create_report(res_files, 'results/wa_idle', title=title, description= description)
+    create_report(res_files, 'results/group_util', title=title, description= description)
 
 
 main()
