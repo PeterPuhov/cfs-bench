@@ -35,11 +35,25 @@ def create_report(res_files: [], output: str, title="", description=""):
         list_of_strings = ['Test'] + list(test_res.keys())
         cols = len(list_of_strings)
         rows = 1
+        avg = {}
+        avgc = {}
         for r in res:
-            list_of_strings.extend( [r['name']] + list(r['tests'][test_key]['result'].values()) )
+            list_of_strings.extend( [r['name'] + " (" + r['iteration'] + ")"] + list(r['tests'][test_key]['result'].values()) )
+            rows += 1
+            if r['name'] not in avg.keys():
+                avg[r['name']] = list(r['tests'][test_key]['result'].values())
+                avgc[r['name']] = 1
+            else:
+                avg[r['name']] = [str(float(x) + float(y)) for x, y in zip(avg[r['name']], list(r['tests'][test_key]['result'].values()))]
+                avgc[r['name']] += 1
+
+        for avg_key in avg.keys():
+            avg[avg_key] = [str(round(float(x) / avgc[avg_key], 3)) for x in avg[avg_key]]
+            list_of_strings.extend( [avg_key + " (avg)"] + avg[avg_key] )
             rows += 1
 
         mdFile.new_table(columns=cols, rows=rows, text=list_of_strings, text_align='left')
         mdFile.new_line()
 
     mdFile.create_md_file()
+    print("{}.md succesfully created".format(output))

@@ -8,7 +8,7 @@ import tests.hackbench
 import src.test_registry as test_registry
 
 
-def run_tests(test_name, target, tests_to_run):
+def run_tests(test_name, target, tests_to_run, iter = 0):
     test_results = Results(target)
 
     time = 60
@@ -18,33 +18,34 @@ def run_tests(test_name, target, tests_to_run):
             t =  test(target, time=time)
             t.run(target, test_results)
 
-    return test_results.store(test_name)
+    return test_results.store(test_name, iteration=iter)
 
 
 def main():
     target = Target()
     res_files = []
 
-    tests_to_run = []
+    tests_to_run = ['SysBenchMutex', 'SysBenchThreads', 'SysBenchMemory', 'SysBenchCpu']
     iter = 5
+    test_delay = 2
 
     target.execute('sysctl kernel.sched_check_group_util=0', as_root=True)
     for i in range(iter):
-        time.sleep(5)
-        res_files.append(run_tests(test_name='Default-{}'.format(i), target=target, tests_to_run=tests_to_run))
+        time.sleep(test_delay)
+        res_files.append(run_tests(test_name='Default', target=target, tests_to_run=tests_to_run, iter=i))
 
     target.execute('sysctl kernel.sched_check_group_util=1', as_root=True)
     for i in range(iter):
-        time.sleep(5)
-        res_files.append(run_tests(test_name='G-Util-{}'.format(i), target=target, tests_to_run=tests_to_run))
+        time.sleep(test_delay)
+        res_files.append(run_tests(test_name='group_util', target=target, tests_to_run=tests_to_run, iter=i))
 
     title = "Usage of group_util in update_pick_idlest() impact on common benchmarks"
     description = "In update_pick_idlest() function \
-                   When both groups have 'group_has_spare' type  \n \
+                   When both groups have 'group_has_spare' type \
                    and the same number of idle CPU's. \
                    We suggest evaluating group_util to find idlest group. "
 
-    create_report(res_files, 'results/group_util', title=title, description= description)
+    create_report(res_files, 'results/group_util_vm', title=title, description= description)
 
 
 main()

@@ -17,6 +17,9 @@ class Target(object):
     def n_cpus(self):
         return self.platform['CPUs']
 
+    def n_nodes(self):
+        return self.platform['NUMA nodes']
+
     def number_of_cpus(self):
         num_cpus = 0
         corere = re.compile(r'^\s*cpu\d+\s*$')

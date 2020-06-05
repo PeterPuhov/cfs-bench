@@ -6,8 +6,8 @@ import src.test_registry as test_registry
 @test_registry.register_test
 class SysBenchCpu(TestCase):
     def __init__(self, target: Target, **kwargs):
-        threads = int(target.n_cpus() / 2)
-        command = 'sysbench cpu --time=60 --threads={} --cpu-max-prime=10000 run'.format(threads)
+        threads = int(target.n_cpus() / target.n_nodes())
+        command = 'sysbench cpu --threads={} --cpu-max-prime=10000 run'.format(threads)
         super().__init__(command)
 
     def parse_result(self, result: str):
@@ -24,8 +24,8 @@ class SysBenchCpu(TestCase):
 @test_registry.register_test
 class SysBenchMemory(TestCase):
     def __init__(self, target: Target, **kwargs):
-        threads = int(target.n_cpus() / 2)
-        command = 'sysbench memory --time=60 --memory-access-mode=rnd --threads={} run'.format(threads)
+        threads = int(target.n_cpus() / target.n_nodes())
+        command = 'sysbench memory --memory-access-mode=rnd --threads={} run'.format(threads)
         super().__init__(command)
 
     def parse_result(self, result: str):
@@ -43,8 +43,8 @@ class SysBenchMemory(TestCase):
 @test_registry.register_test
 class SysBenchThreads(TestCase):
     def __init__(self, target: Target, **kwargs):
-        threads = int(target.n_cpus() / 2)
-        command = 'sysbench threads --time=60 --threads={} run'.format(threads)
+        threads = int(target.n_cpus() / target.n_nodes())
+        command = 'sysbench threads --threads={} run'.format(threads)
         super().__init__(command)
 
     def parse_result(self, result: str):
@@ -62,7 +62,7 @@ class SysBenchThreads(TestCase):
 @test_registry.register_test
 class SysBenchMutex(TestCase):
     def __init__(self, target: Target, **kwargs):
-        threads = int(target.n_cpus() * 4)
+        threads = int(target.n_cpus() / target.n_nodes())
         command = 'sysbench mutex --mutex-num=1 --threads={} run'.format(threads)
         super().__init__(command)
 
