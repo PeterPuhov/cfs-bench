@@ -45,7 +45,7 @@ def main():
                    and the same number of idle CPU's. \
                    We suggest evaluating group_util to find idlest group. "
 
-    create_report(res_files, 'results/group_util_vm', title=title, description= description)
+    create_report(res_files, 'results/group_util', title=title, description= description)
 
 
 main()
