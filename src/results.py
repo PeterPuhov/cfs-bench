@@ -11,6 +11,7 @@ class Results(object):
         self.test_results = {}
         self.test_results['platform'] = target.platform
         self.test_results['tests'] = {}
+        target.execute('mkdir tmp', as_root=False)
 
     def log(self, data: str):
         entry = datetime.now().strftime("%H:%M:%S") + " " + data
@@ -18,7 +19,7 @@ class Results(object):
         self.log_data.append(entry)
 
     def store(self, name, iteration = 0):
-        fname = "{}-{}.json".format(name, iteration)
+        fname = "tmp/{}-{}.json".format(name, iteration)
 
         self.test_results['name'] = name
         self.test_results['iteration'] = str(iteration)

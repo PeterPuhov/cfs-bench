@@ -18,7 +18,7 @@ class SysBenchCpu(TestCase):
                 res = line.split(token)[1].replace(' ', '')
                 break
         
-        return {'Events/sec': res}
+        return {'Events/sec': res, 'HIB': True}
 
 
 @test_registry.register_test
@@ -37,14 +37,16 @@ class SysBenchMemory(TestCase):
                 res = "{:.3f}".format(int(res) / (10 * 1024))
                 break
                 
-        return {'Memory BW (MB/s)': res}
+        return {'Memory BW (MB/s)': res, 'HIB': True}
 
 
 @test_registry.register_test
 class SysBenchThreads(TestCase):
     def __init__(self, target: Target, **kwargs):
-        threads = int(target.n_cpus() / target.n_nodes())
-        command = 'sysbench threads --threads={} run'.format(threads)
+        threads = min(int(target.n_cpus() / target.n_nodes()), 16)
+        #command = 'sysbench threads --threads={} run'.format(threads)
+        
+        command = 'sysbench threads --max-time=1 --max-requests=-1 --threads={} run'.format(threads)
         super().__init__(command)
 
     def parse_result(self, result: str):
@@ -56,13 +58,13 @@ class SysBenchThreads(TestCase):
                 res = "{:.3f}".format(res)
                 break
 
-        return {'Events/sec': res}
+        return {'Events/sec': res, 'HIB': True}
 
 
 @test_registry.register_test
 class SysBenchMutex(TestCase):
     def __init__(self, target: Target, **kwargs):
-        threads = int(target.n_cpus() / target.n_nodes())
+        threads = min(int(target.n_cpus() / target.n_nodes()), 16)
         command = 'sysbench mutex --mutex-num=1 --threads={} run'.format(threads)
         super().__init__(command)
 
@@ -74,4 +76,4 @@ class SysBenchMutex(TestCase):
                 res = line.split(token)[1].replace(' ', '').replace('s', '')
                 break
 
-        return {'Time (sec)': res}
+        return {'Time (sec)': res, 'HIB': False}

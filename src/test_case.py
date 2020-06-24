@@ -12,7 +12,12 @@ class TestCase(object):
         results.log('Running [ {} ] ...'.format(self.command))
         test_result = {}
         test_result['command'] = self.command
-        test_result['result'] = self.parse_result(target.execute(self.command))        
+        #test_result['result'] = self.parse_result(target.execute(self.command))        
+        res = target.execute(self.command)
+        pr = self.parse_result(res)
+        test_result['result'] = pr
+        test_result['raw_result'] = float(next(iter(pr.values())))
+         
         results.add_test_result(self.__class__.__name__, test_result)
         results.log('Done.')
 
@@ -26,7 +31,9 @@ class TestCase(object):
 
         cmd += " {}".format(self.command)
         res = target.execute(cmd)
-        test_result['result'] = self.parse_result(res)
+        pr = self.parse_result(res)        
+        test_result['result'] = pr
+        test_result['raw_result'] = float(next(iter(pr.values())))
         for e in events:
             test_result['result'].update(self.parse_event(e, res))
 

@@ -7,7 +7,7 @@ import src.test_registry as test_registry
 class HackbenchForkSockets(TestCase):
     def __init__(self, target: Target, **kwargs):
         threads = int(target.n_cpus() / 2)
-        command = 'hackbench --loops 20000'
+        command = 'hackbench --loops 200'
         super().__init__(command)
 
     def parse_result(self, result: str):
@@ -18,7 +18,7 @@ class HackbenchForkSockets(TestCase):
                 res = line.split(token)[1].replace(' ', '')
                 break
         
-        return {'Time (sec)': res}
+        return {'Time (sec)': res, 'HIB': False}
 
 @test_registry.register_test
 class HackbenchPipeThreads(TestCase):
@@ -35,7 +35,7 @@ class HackbenchPipeThreads(TestCase):
                 res = line.split(token)[1].replace(' ', '')
                 break
         
-        return {'Time (sec)': res}
+        return {'Time (sec)': res, 'HIB': False}
 
 @test_registry.register_test
 class HackbenchPipeThreads4k(TestCase):
@@ -52,4 +52,4 @@ class HackbenchPipeThreads4k(TestCase):
                 res = line.split(token)[1].replace(' ', '')
                 break
         
-        return {'Time (sec)': res}
+        return {'Time (sec)': res, 'HIB': False}

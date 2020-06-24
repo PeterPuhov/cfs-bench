@@ -11,7 +11,7 @@ class PerfBenchSchedPipe(TestCase):
 
     def parse_result(self, result: str):
         res = result.splitlines()[0]
-        return {'Time (sec)': res}
+        return {'Time (sec)': res,  'HIB': False}
 
 @test_registry.register_test
 class PerfBenchSchedMessaging(TestCase):
@@ -23,7 +23,7 @@ class PerfBenchSchedMessaging(TestCase):
 
     def parse_result(self, result: str):
         res = result.splitlines()[0]
-        return {'Time (sec)': res}
+        return {'Time (sec)': res,  'HIB': False}
 
 @test_registry.register_test
 class PerfBenchMemMemset(TestCase):
@@ -37,12 +37,12 @@ class PerfBenchMemMemset(TestCase):
         regexPattern = '|'.join(map(re.escape, delimiters))
         r = re.split(regexPattern, result)[1]
         res = "{:.3f}".format(float(r) / (1 << 30))
-        return {'Memory BW (GB/s)': res}
+        return {'Memory BW (GB/s)': res,  'HIB': True}
 
 @test_registry.register_test
 class PerfBenchFutexWake(TestCase):
     def __init__(self, target: Target, **kwargs):
-        t = target.platform['CPUs'] * 8 * 10
+        t = target.platform['CPUs']
         super().__init__('perf bench -f simple futex wake -s -t {} -w 1'.format(t))
 
     def parse_result(self, result: str):
@@ -50,4 +50,4 @@ class PerfBenchFutexWake(TestCase):
         regexPattern = '|'.join(map(re.escape, delimiters))
         t = re.split(regexPattern, result)[1]
 
-        return {'Time (ms)': t }
+        return {'Time (ms)': t,  'HIB': False }

@@ -16,7 +16,7 @@ def run_tests(test_name, target, tests_to_run, iter = 0):
     for test in test_registry.test_registry:
         if not tests_to_run or test(target).__class__.__name__ in tests_to_run:
             t =  test(target, time=test_time)
-            time.sleep(10)
+            time.sleep(1)
             t.run(target, test_results)
 
     return test_results.store(test_name, iteration=iter)
@@ -26,16 +26,19 @@ def main():
     target = Target()
     res_files = []
 
-    tests_to_run = ['SysBenchMutex', 'SysBenchThreads', 'SysBenchMemory', 'SysBenchCpu']
-    iter = 5    
-    for batch in range(0,4):
+    # tests_to_run = ['SysBenchMutex', 'SysBenchThreads', 'SysBenchMemory', 'SysBenchCpu']
+    tests_to_run = ['SysBenchThreads', 'HackbenchForkSockets', 'SysBenchMutex', 'PerfBenchFutexWake']
+    iter = 3
+    for batch in range(0,1):
         target.execute('sysctl kernel.sched_check_group_util=0', as_root=True)
+        time.sleep(5)
         for i in range(iter):        
-            res_files.append(run_tests(test_name='Default_{}'.format(batch), target=target, tests_to_run=tests_to_run, iter=i))
+            res_files.append(run_tests(test_name='BASELINE_{}'.format(batch), target=target, tests_to_run=tests_to_run, iter=i))
 
         target.execute('sysctl kernel.sched_check_group_util=1', as_root=True)
+        time.sleep(5)
         for i in range(iter):        
-            res_files.append(run_tests(test_name='group_util_{}'.format(batch), target=target, tests_to_run=tests_to_run, iter=i))
+            res_files.append(run_tests(test_name='PATCH_{}'.format(batch), target=target, tests_to_run=tests_to_run, iter=i))
 
     title = "Usage of group_util in update_pick_idlest() impact on common benchmarks"
     description = "In update_pick_idlest() function \
@@ -43,7 +46,8 @@ def main():
                    and the same number of idle CPU's. \
                    We suggest evaluating group_util to find idlest group. "
 
-    create_report(res_files, 'results/group_util', title=title, description= description)
+    #create_report(res_files, 'results/group_util', title=title, description= description)
+    create_patch(res_files, 'results/group_util', title=title, description= description)
 
 
 main()
