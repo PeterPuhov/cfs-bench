@@ -44,9 +44,9 @@ class SysBenchMemory(TestCase):
 class SysBenchThreads(TestCase):
     def __init__(self, target: Target, **kwargs):
         threads = min(int(target.n_cpus() / target.n_nodes()), 16)
-        #command = 'sysbench threads --threads={} run'.format(threads)
+        command = 'sysbench threads --threads={} run'.format(threads)
         
-        command = 'sysbench threads --max-time=1 --max-requests=-1 --threads={} run'.format(threads)
+        #command = 'sysbench threads --max-time=1 --max-requests=-1 --threads={} run'.format(threads)
         super().__init__(command)
 
     def parse_result(self, result: str):

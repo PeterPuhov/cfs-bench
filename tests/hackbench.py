@@ -7,7 +7,7 @@ import src.test_registry as test_registry
 class HackbenchForkSockets(TestCase):
     def __init__(self, target: Target, **kwargs):
         threads = int(target.n_cpus() / 2)
-        command = 'hackbench --loops 200'
+        command = 'hackbench --loops 2000'
         super().__init__(command)
 
     def parse_result(self, result: str):
