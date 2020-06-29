@@ -29,4 +29,7 @@ class Results(object):
         return fname
 
     def add_test_result(self, test, test_result: dict):
-        self.test_results['tests'][test] = test_result
+        if test in self.test_results['tests'].keys():
+            self.test_results['tests'][test].append(test_result)
+        else:
+            self.test_results['tests'][test] = [test_result]            
